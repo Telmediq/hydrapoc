@@ -20,6 +20,14 @@ x-hydra-variables: &hydra-variables
   OAUTH_CLIENT_SECRET: 'poc-secret'
   OAUTH_CALLBACK_URI: 'http://127.0.0.1:7500/oauth2/finish'
 
+x-idsrv-demo-variables: &idsrv-variables
+  IDSRV_ISSUER: 'http://idsrv'
+  IDSRV_TOKEN_ENDPOINT: 'http://idsrv/connect/token'
+  IDSRV_CLIENT_SECRET: 'poc-secret'
+  IDSRV_CLIENT_CREDENTIALS_CLIENTID: 'poc-client'
+  IDSRV_AUTH_CODE_CLIENTID: 'poc-client-authcode'
+  IDSRV_DUMMY_SCOPE: 'api1'
+
 services:
 
   identity:
@@ -89,3 +97,33 @@ services:
     depends_on:
       - postgresd
     command: postgresd:5432
+  
+  idsrv:
+    build:
+      context: IdSrvDemo/src/IdentityServer/
+    ports:
+      - '5000:80'
+    environment:
+      <<: *idsrv-variables
+      IDSRV_REDIRECT_URIS: 'http://localhost:5002/callback.html'
+      IDSRV_POSTLOGOUT_URIS: 'http://localhost:5002/index.html'
+      IDSRV_ALLOWED_CORS: 'http://localhost:5002'
+
+  dotnet-api:
+    build:
+      context: IdSrvDemo/src/ResourceApi
+    ports:
+      - '5001:80'
+    environment:
+      <<: *idsrv-variables
+      DOTNET_API_URL: 'http://dotnet-api'
+
+  js-spa:
+    build:
+      context: IdSrvDemo/src/JsSpa
+    ports:
+      - '5002:80'
+
+  console-client:
+    build:
+      context: IdSrvDemo/src/ConsoleClient

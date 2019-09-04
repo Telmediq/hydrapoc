@@ -20,7 +20,13 @@ Just run:
 
 `make run`
 
-Then visit [http://localhost:7500/login](http://localhost:7500/login).
+#### Django / Hydra Demo
+Visit [http://localhost:7500/login](http://localhost:7500/login).
+
+#### SPA / IdentityServer Demo
+Visit [http://localhost:5002/](http://localhost:5002/).
+
+A service-to-service demo is also available at IdSrvDemo/src/ConsoleClient/run.sh.
 
 #### To come
 
