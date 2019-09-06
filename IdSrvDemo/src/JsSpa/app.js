@@ -34,7 +34,7 @@ function logout() {
 
 var config = {
     authority: "http://localhost:5000",
-    client_id: "poc-client-authcode",
+    client_id: "poc-client",
     redirect_uri: "http://localhost:5002/callback.html",
     response_type: "code",
     scope:"openid profile api1",

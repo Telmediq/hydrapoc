@@ -130,7 +130,6 @@ CLIENT_SECRET = 'abcdefSuperSecret123'
 TOKEN_URL = 'http://localhost:4444/oauth2/token'
 KEYSET_URL = 'http://localhost:4444/.well-known/jwks.json'
 
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -144,3 +143,7 @@ HYDRA_PUBLIC_ROOT = env.str('HYDRA_PUBLIC_ROOT')
 OAUTH_CLIENT_ID = env.str('OAUTH_CLIENT_ID')
 OAUTH_CLIENT_SECRET = env.str('OAUTH_CLIENT_SECRET')
 OAUTH_CALLBACK_URI = env.str('OAUTH_CALLBACK_URI')
+
+USE_IDENTITY_SERVER = (env.str('USE_IDENTITY_SERVER') == 'TRUE')
+IDSRV_AUTH_ENDPOINT = env.str('IDSRV_AUTH_ENDPOINT')
+IDSRV_TOKEN_ENDPOINT = env.str('IDSRV_TOKEN_ENDPOINT')
