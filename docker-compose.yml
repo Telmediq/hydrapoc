@@ -23,9 +23,10 @@ x-hydra-variables: &hydra-variables
 x-idsrv-demo-variables: &idsrv-variables
   IDSRV_ISSUER: 'http://idsrv'
   IDSRV_TOKEN_ENDPOINT: 'http://idsrv/connect/token'
+  IDSRV_AUTH_ENDPOINT: 'http://localhost:5000/connect/authorize'
   IDSRV_CLIENT_SECRET: 'poc-secret'
-  IDSRV_CLIENT_CREDENTIALS_CLIENTID: 'poc-client'
-  IDSRV_AUTH_CODE_CLIENTID: 'poc-client-authcode'
+  IDSRV_CLIENT_CREDENTIALS_CLIENTID: 'poc-client-client-credentials'
+  IDSRV_AUTH_CODE_CLIENTID: 'poc-client'
   IDSRV_DUMMY_SCOPE: 'api1'
 
 services:
@@ -50,7 +51,9 @@ services:
       - ./resourceserver:/opt/app
     environment:
       <<: *hydra-variables
+      <<: *idsrv-variables
       DEFAULT_DATABASE: 'postgres://hydra:secret@postgresd:5432/resource'
+      USE_IDENTITY_SERVER: 'TRUE'
 
   hydra:
     image: oryd/hydra:latest
@@ -105,7 +108,7 @@ services:
       - '5000:80'
     environment:
       <<: *idsrv-variables
-      IDSRV_REDIRECT_URIS: 'http://localhost:5002/callback.html'
+      IDSRV_REDIRECT_URIS: 'http://localhost:5002/callback.html,http://127.0.0.1:7500/oauth2/finish'
       IDSRV_POSTLOGOUT_URIS: 'http://localhost:5002/index.html'
       IDSRV_ALLOWED_CORS: 'http://localhost:5002'
 

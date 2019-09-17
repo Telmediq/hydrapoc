@@ -11,11 +11,12 @@ from django.shortcuts import render_to_response
 from jwt.algorithms import RSAAlgorithm
 from requests_oauthlib import OAuth2Session
 
-OAUTH_AUTH_URI = f'{settings.HYDRA_PUBLIC_ROOT}/oauth2/auth'
-OAUTH_TOKEN_URI = f'{settings.HYDRA_PUBLIC_ROOT}/oauth2/token'
-
-OAUTH_AUTH_URI = f'{settings.HYDRA_PUBLIC_ROOT}/oauth2/auth'
-OAUTH_TOKEN_URI = f'http://hydra:4444/oauth2/token'
+if settings.USE_IDENTITY_SERVER:
+    OAUTH_AUTH_URI = settings.IDSRV_AUTH_ENDPOINT
+    OAUTH_TOKEN_URI = settings.IDSRV_TOKEN_ENDPOINT
+else:
+    OAUTH_AUTH_URI = f'{settings.HYDRA_PUBLIC_ROOT}/oauth2/auth'
+    OAUTH_TOKEN_URI = f'http://hydra:4444/oauth2/token'
 
 
 def get_oauth2_session() -> OAuth2Session:

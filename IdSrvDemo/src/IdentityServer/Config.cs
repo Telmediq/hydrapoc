@@ -64,7 +64,7 @@ namespace IdentityServer
                     ClientId = EnvironmentConfig.AuthCodeClientId,
                     ClientName = "JavaScript Client",
                     AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
+                    RequirePkce = false,
                     RequireClientSecret = false,
 
                     RedirectUris =           EnvironmentConfig.RedirectUris,
@@ -83,7 +83,7 @@ namespace IdentityServer
 
         /// <summary>
         /// Test users. In real code, these would either be stored in some local storage,
-        /// like Postgres or AD, or we'd be using some upstream OIDC provider like AzureAD.'
+        /// like Postgres or AD, or we'd be using some upstream OIDC provider like AzureAD.
         /// </summary>
         public static List<TestUser> GetUsers()
         {
